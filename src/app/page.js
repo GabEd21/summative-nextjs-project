@@ -21,13 +21,13 @@ export default function Home() {
   return (
     <div style={containerStyle}>
       <div style={sectionStyle}>
-        <h2>Add Employee</h2>
-        <AddEmployeeForm />
+        <h2>Adding Employee to the Database</h2>
+        <button>Add Employee</button>
       </div>
 
       <div style={sectionStyle}>
         <h2>View Employees</h2>
-        <ViewEmployees />
+        <button>View</button>
       </div>
     </div>
   );
