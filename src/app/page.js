@@ -1,7 +1,4 @@
 import React from 'react';
-import AddEmployeeForm from '../components/AddEmployeeForm';
-import ViewEmployees from '../components/ViewEmployees';
-
 export default function Home() {
   const containerStyle = {
     display: 'flex',
