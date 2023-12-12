@@ -30,7 +30,7 @@ const ViewEmployees = () => {
       <ul>
         {employees.map((employee) => (
           <li key={employee.id}>
-            {employee.name}{' '}
+            {employee.name}{' '}{employee.position}{' '}
             <Link href={`/employee-details/${employee.id}`}>
                 <button>View Details</button>
             </Link>
