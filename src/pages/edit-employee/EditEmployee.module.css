@@ -1,0 +1,40 @@
+/* EditEmployee.module.css */
+.container {
+    max-width: 400px;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .formGroup {
+    margin-bottom: 15px;
+  }
+  
+  .labelWrapper label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .inputField {
+    width: 100%;
+    padding: 8px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  .updateButton {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .updateButton:hover {
+    background-color: #45a049;
+  }
+  

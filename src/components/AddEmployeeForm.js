@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import styles from "./AddEmployeeForm.module.css"; // Correct path to your CSS module
+
 
 const AddEmployeeForm = () => {
-  const router = useRouter(); // Access the router object
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     position: "",
@@ -13,6 +15,7 @@ const AddEmployeeForm = () => {
     startDate: "",
     endDate: "",
   });
+  const [isAddingEmployee, setIsAddingEmployee] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,13 +24,13 @@ const AddEmployeeForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsAddingEmployee(true);
 
-    // Convert monthlySalary and format startDate before sending it to the API
     const formattedData = {
       ...formData,
       monthlySalary: parseFloat(formData.monthlySalary),
       startDate: new Date(formData.startDate).toISOString(),
-      endDate: new Date(formData.endDate).toISOString(), // Format the date
+      endDate: new Date(formData.endDate).toISOString(),
     };
 
     try {
@@ -41,120 +44,119 @@ const AddEmployeeForm = () => {
 
       if (response.ok) {
         console.log("Employee added successfully!");
-
-        // Redirect to the "/view-employees" page
         router.push("/view-employees");
       } else {
         console.error("Failed to add employee:", await response.json());
-        // Handle error, e.g., show an error message
       }
     } catch (error) {
       console.error("Error adding employee:", error);
-      // Handle unexpected errors
+    } finally {
+      setIsAddingEmployee(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          Name:
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit} className={styles.addEmployeeForm}>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Name:</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
+            className={styles.input}
             placeholder="Enter name"
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Position:
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Position:</label>
           <input
             type="text"
             name="position"
             value={formData.position}
             onChange={handleInputChange}
+            className={styles.input}
             placeholder="Enter position"
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Address:
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Address:</label>
           <input
             type="text"
             name="address"
             value={formData.address}
             onChange={handleInputChange}
+            className={styles.input}
             placeholder="Enter address"
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Contact Number:
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Contact Number:</label>
           <input
             type="text"
             name="contactNumber"
             value={formData.contactNumber}
             onChange={handleInputChange}
+            className={styles.input}
             placeholder="Enter contact number"
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Email:
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Email:</label>
           <input
             type="text"
             name="email"
             value={formData.email}
             onChange={handleInputChange}
+            className={styles.input}
             placeholder="Enter email"
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Monthly Salary:
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Monthly Salary:</label>
           <input
             type="number"
             name="monthlySalary"
             value={formData.monthlySalary}
             onChange={handleInputChange}
+            className={styles.input}
             placeholder="Enter monthly salary"
             step="0.01"
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Start Date:
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Start Date:</label>
           <input
             type="date"
             name="startDate"
             value={formData.startDate}
             onChange={handleInputChange}
+            className={styles.input}
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          End Date:
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>End Date:</label>
           <input
             type="date"
             name="endDate"
             value={formData.endDate}
             onChange={handleInputChange}
+            className={styles.input}
           />
-        </label>
-      </div>
-      <div>
-        <button type="submit">Add Employee</button>
-      </div>
-    </form>
+        </div>
+        <div className={styles.formGroup}>
+          <button type="submit" className={styles.button}>
+            Add Employee
+          </button>
+        </div>
+        {isAddingEmployee && (
+          <div className={styles.addingEmployeeMessage}>
+            Adding Employee to the Database...
+          </div>
+        )}
+      </form>
+    </div>
   );
 };
 

@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+// Import the CSS styles
+import styles from './employee-details.module.css';
+
 const EmployeeDetails = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -38,13 +41,10 @@ const EmployeeDetails = () => {
         });
 
         if (response.ok) {
-          // Employee deleted successfully
           alert('Employee deleted successfully!');
           
-          // Redirect to the ViewEmployees page
           router.push('/view-employees');
 
-          // Optionally, you can navigate to a different page or take other actions
         } else {
           console.error(`Failed to delete employee with ID ${id}.`);
         }
@@ -52,48 +52,47 @@ const EmployeeDetails = () => {
         console.error(`Error deleting employee with ID ${id}:`, error);
       }
     } else {
-      // Incorrect name confirmation
       alert('Your input did not match. Employee not deleted.');
     }
 
-    // Reset confirmationName and hide confirmation
     setConfirmationName('');
     setShowConfirmation(false);
   };
 
   const handleEdit = () => {
-    // Redirect to the EditEmployee page with the employee ID
     router.push(`/edit-employee/${id}`);
   };
 
   return (
-    <div>
+    <div className={`${styles.employeeDetailsContainer} text-center`}>
       <h2>Employee Details</h2>
       {employee ? (
-        <div>
-          <p>Name: {employee.name}</p>
-          <p>Position: {employee.position}</p>
-          <p>Address: {employee.address}</p>
-          <p>Contact Number: {employee.contactNumber}</p>
-          <p>Email: {employee.email}</p>
-          <p>Monthly Salary: {employee.monthlySalary}</p>
-          <p>Start Date of Contract: {employee.startDate}</p>
-          <p>End Date of Contract: {employee.endDate}</p>
+        <div className={styles.employeeDetails}>
+          <p><strong>Name:</strong> {employee.name}</p>
+          <p><strong>Position:</strong> {employee.position}</p>
+          <p><strong>Address:</strong> {employee.address}</p>
+          <p><strong>Contact Number:</strong> {employee.contactNumber}</p>
+          <p><strong>Email:</strong> {employee.email}</p>
+          <p><strong>Monthly Salary:</strong> {employee.monthlySalary}</p>
+          <p><strong>Start Date of Contract:</strong> {employee.startDate}</p>
+          <p><strong>End Date of Contract:</strong> {employee.endDate}</p>
 
-          <button onClick={handleEdit}>Edit</button>
+          <button className={styles.editButton} onClick={handleEdit}>Edit</button>
 
-          <button onClick={() => setShowConfirmation(true)}>Delete</button>
+          <button className={styles.deleteButton} onClick={() => setShowConfirmation(true)}>Delete</button>
 
           {showConfirmation && (
-            <div>
-              <p>Type the employee's name to confirm deletion:</p>
+            <div className={styles.confirmationForm}>
+              <p>Type the employees name to confirm deletion:</p>
               <input
                 type="text"
                 value={confirmationName}
                 onChange={(e) => setConfirmationName(e.target.value)}
               />
-              <button onClick={handleDelete}>Confirm</button>
-              <button onClick={() => setShowConfirmation(false)}>Cancel</button>
+              <div>
+                <button onClick={handleDelete}>Confirm</button>
+                <button onClick={() => setShowConfirmation(false)}>Cancel</button>
+              </div>
             </div>
           )}
         </div>

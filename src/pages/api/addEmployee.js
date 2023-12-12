@@ -7,7 +7,6 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
         const { name, position, address, contactNumber, email, monthlySalary, startDate, endDate } = req.body;
-      // Perform validation if needed
 
       const newEmployee = await prisma.employee.create({
         data: {
@@ -18,7 +17,7 @@ export default async function handler(req, res) {
           email,
           monthlySalary,
           startDate,
-          endDate,  // Fixed field name
+          endDate,
         },
       });
 
