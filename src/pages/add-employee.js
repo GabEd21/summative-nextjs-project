@@ -1,5 +1,4 @@
-// pages/AddEmployeePage.js
-
+// pages/add-employee.js
 import React from 'react';
 import AddEmployeeForm from '../components/AddEmployeeForm';
 
