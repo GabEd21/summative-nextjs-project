@@ -6,6 +6,8 @@ const EmployeeDetails = () => {
   const router = useRouter();
   const { id } = router.query;
   const [employee, setEmployee] = useState(null);
+  const [confirmationName, setConfirmationName] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
     const fetchEmployeeDetails = async () => {
@@ -27,6 +29,38 @@ const EmployeeDetails = () => {
     }
   }, [id]);
 
+  const handleDelete = async () => {
+    if (confirmationName === employee.name) {
+      try {
+        const deleteURL = `/api/deleteEmployee/${id}`;
+        const response = await fetch(deleteURL, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          // Employee deleted successfully
+          alert('Employee deleted successfully!');
+          
+          // Redirect to the ViewEmployees page
+          router.push('/view-employees');
+
+          // Optionally, you can navigate to a different page or take other actions
+        } else {
+          console.error(`Failed to delete employee with ID ${id}.`);
+        }
+      } catch (error) {
+        console.error(`Error deleting employee with ID ${id}:`, error);
+      }
+    } else {
+      // Incorrect name confirmation
+      alert('Your input did not match. Employee not deleted.');
+    }
+
+    // Reset confirmationName and hide confirmation
+    setConfirmationName('');
+    setShowConfirmation(false);
+  };
+
   return (
     <div>
       <h2>Employee Details</h2>
@@ -40,8 +74,26 @@ const EmployeeDetails = () => {
           <p>Monthly Salary: {employee.monthlySalary}</p>
           <p>Start Date of Contract: {employee.startDate}</p>
           <p>End Date of Contract: {employee.endDate}</p>
+
+          {/* Edit Button */}
           <button>Edit</button>
-          <button>Delete</button>
+
+          {/* Delete Button */}
+          <button onClick={() => setShowConfirmation(true)}>Delete</button>
+
+          {/* Delete Confirmation */}
+          {showConfirmation && (
+            <div>
+              <p>Type the employee's name to confirm deletion:</p>
+              <input
+                type="text"
+                value={confirmationName}
+                onChange={(e) => setConfirmationName(e.target.value)}
+              />
+              <button onClick={handleDelete}>Confirm</button>
+              <button onClick={() => setShowConfirmation(false)}>Cancel</button>
+            </div>
+          )}
         </div>
       ) : (
         <p>No employee details available for ID {id}.</p>
