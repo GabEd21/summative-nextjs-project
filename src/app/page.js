@@ -31,7 +31,11 @@ export default function Home() {
 
       <div style={sectionStyle}>
         <h2>View Employees</h2>
-        <button>View</button>
+        <Link href="/view-employees">
+          <div>
+            <button>View</button>
+          </div>
+        </Link>
       </div>
     </div>
   );

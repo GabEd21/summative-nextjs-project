@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 
 const AddEmployeeForm = () => {
+  const router = useRouter(); // Access the router object
   const [formData, setFormData] = useState({
     name: "",
     position: "",
@@ -8,8 +10,8 @@ const AddEmployeeForm = () => {
     contactNumber: "",
     email: "",
     monthlySalary: 0.0,
-    startDate: "",  
-    endDate: "",    
+    startDate: "",
+    endDate: "",
   });
 
   const handleInputChange = (e) => {
@@ -19,15 +21,15 @@ const AddEmployeeForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Convert monthlySalary and format startDate before sending it to the API
     const formattedData = {
       ...formData,
       monthlySalary: parseFloat(formData.monthlySalary),
-      startDate: new Date(formData.startDate).toISOString(), 
+      startDate: new Date(formData.startDate).toISOString(),
       endDate: new Date(formData.endDate).toISOString(), // Format the date
     };
-  
+
     try {
       const response = await fetch("/api/addEmployee", {
         method: "POST",
@@ -36,10 +38,12 @@ const AddEmployeeForm = () => {
         },
         body: JSON.stringify(formattedData),
       });
-  
+
       if (response.ok) {
         console.log("Employee added successfully!");
-        // Optionally, you can redirect or show a success message here
+
+        // Redirect to the "/view-employees" page
+        router.push("/view-employees");
       } else {
         console.error("Failed to add employee:", await response.json());
         // Handle error, e.g., show an error message
@@ -55,31 +59,61 @@ const AddEmployeeForm = () => {
       <div>
         <label>
           Name:
-          <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Enter name" />
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            placeholder="Enter name"
+          />
         </label>
       </div>
       <div>
         <label>
           Position:
-          <input type="text" name="position" value={formData.position} onChange={handleInputChange} placeholder="Enter position" />
+          <input
+            type="text"
+            name="position"
+            value={formData.position}
+            onChange={handleInputChange}
+            placeholder="Enter position"
+          />
         </label>
       </div>
       <div>
         <label>
           Address:
-          <input type="text" name="address" value={formData.address} onChange={handleInputChange} placeholder="Enter address" />
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleInputChange}
+            placeholder="Enter address"
+          />
         </label>
       </div>
       <div>
         <label>
           Contact Number:
-          <input type="text" name="contactNumber" value={formData.contactNumber} onChange={handleInputChange} placeholder="Enter contact number" />
+          <input
+            type="text"
+            name="contactNumber"
+            value={formData.contactNumber}
+            onChange={handleInputChange}
+            placeholder="Enter contact number"
+          />
         </label>
       </div>
       <div>
         <label>
           Email:
-          <input type="text" name="email" value={formData.email} onChange={handleInputChange} placeholder="Enter email" />
+          <input
+            type="text"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Enter email"
+          />
         </label>
       </div>
       <div>
@@ -98,13 +132,23 @@ const AddEmployeeForm = () => {
       <div>
         <label>
           Start Date:
-          <input type="date" name="startDate" value={formData.startDate} onChange={handleInputChange} />
+          <input
+            type="date"
+            name="startDate"
+            value={formData.startDate}
+            onChange={handleInputChange}
+          />
         </label>
       </div>
       <div>
         <label>
           End Date:
-          <input type="date" name="endDate" value={formData.endDate} onChange={handleInputChange} />
+          <input
+            type="date"
+            name="endDate"
+            value={formData.endDate}
+            onChange={handleInputChange}
+          />
         </label>
       </div>
       <div>
@@ -112,6 +156,6 @@ const AddEmployeeForm = () => {
       </div>
     </form>
   );
-}
+};
 
 export default AddEmployeeForm;

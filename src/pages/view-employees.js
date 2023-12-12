@@ -1,4 +1,6 @@
+// pages/view-employees.js
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const ViewEmployees = () => {
   const [employees, setEmployees] = useState([]);
@@ -29,9 +31,9 @@ const ViewEmployees = () => {
         {employees.map((employee) => (
           <li key={employee.id}>
             {employee.name}{' '}
-            <button onClick={() => handleViewDetails(employee.id)}>
-              View Details
-            </button>
+            <Link href={`/employee-details/${employee.id}`}>
+                <button>View Details</button>
+            </Link>
           </li>
         ))}
       </ul>
