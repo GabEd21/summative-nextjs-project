@@ -29,8 +29,13 @@ const ViewEmployees = () => {
       <h2 className="employee-list-header">Employee List</h2>
       <ul className="employee-list">
         {employees.map((employee) => (
+<<<<<<< HEAD
           <li key={employee.id} className="employee-item">
             <span className="employee-name">{employee.name}</span>
+=======
+          <li key={employee.id}>
+            {employee.name}{'-'}{employee.position}{' '}
+>>>>>>> aa5272fb0bc3e57ead3a0aa3537b0d5768b2617f
             <Link href={`/employee-details/${employee.id}`}>
               <button className="view-details-button">View Details</button>
             </Link>
