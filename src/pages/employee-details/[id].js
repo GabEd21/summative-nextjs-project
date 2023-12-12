@@ -61,6 +61,11 @@ const EmployeeDetails = () => {
     setShowConfirmation(false);
   };
 
+  const handleEdit = () => {
+    // Redirect to the EditEmployee page with the employee ID
+    router.push(`/edit-employee/${id}`);
+  };
+
   return (
     <div>
       <h2>Employee Details</h2>
@@ -75,13 +80,10 @@ const EmployeeDetails = () => {
           <p>Start Date of Contract: {employee.startDate}</p>
           <p>End Date of Contract: {employee.endDate}</p>
 
-          {/* Edit Button */}
-          <button>Edit</button>
+          <button onClick={handleEdit}>Edit</button>
 
-          {/* Delete Button */}
           <button onClick={() => setShowConfirmation(true)}>Delete</button>
 
-          {/* Delete Confirmation */}
           {showConfirmation && (
             <div>
               <p>Type the employee's name to confirm deletion:</p>
